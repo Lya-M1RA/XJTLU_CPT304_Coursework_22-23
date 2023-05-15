@@ -71,7 +71,7 @@ import axios from 'axios'
 
 export default {
     setup() {
-        const username = 'lya_mira'; // 你的GeoNames用户名
+        const username = 'lya_mira';
 
         const selectedCountry = ref('')
         const selectedProvince = ref('')
@@ -122,7 +122,7 @@ export default {
             if (selectedCountry.value) {
                 const country = countries.value.find(c => c.countryCode === selectedCountry.value)
                 if (country) {
-                    const year = new Date().getFullYear() // 获取当前年份
+                    const year = new Date().getFullYear()
                     const response = await fetch(`https://date.nager.at/api/v3/publicholidays/${year}/${country.countryCode}`)
                     const data = await response.json()
                     holidays.value = data
@@ -150,7 +150,7 @@ export default {
                     const daysDifference = differenceInDays(today, date)
                     let response
 
-                    // 对于过去的天气
+
                     if (daysDifference > 0) {
                         response = await fetch(`https://api.openweathermap.org/data/3.0/onecall/timemachine?lat=${city.lat}&lon=${city.lng}&dt=${Math.floor(date.getTime() / 1000)}&units=metric&appid=2805fc2f1e5290a6243c6049b4be1626`)
                         const data = await response.json()
@@ -159,7 +159,7 @@ export default {
                             "  Temperature: " + data.data[0].temp + "°C" +
                             "  Humidity: " + data.data[0].humidity + "%" +
                             "  Wind Speed: " + data.data[0].wind_speed + "m/s"
-                    } else if (daysDifference <= 0 && daysDifference >= -7) { // 对于未来的天气
+                    } else if (daysDifference <= 0 && daysDifference >= -7) {
                         response = await fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${city.lat}&lon=${city.lng}&exclude=current,minutely,hourly,alerts&units=metric&appid=2805fc2f1e5290a6243c6049b4be1626`)
                         const data = await response.json()
                         weather.value =
@@ -184,14 +184,12 @@ export default {
             }
         })
 
-        const stay22Url = ref('')  // 新增 stay22Url Ref 对象
-
-        // ...其他代码省略...
+        const stay22Url = ref('')
 
         watchEffect(() => {
             if (selectedHoliday.value) {
                 fetchWeather(selectedHoliday.value)
-                updateStay22Url()  // 当 selectedHoliday 改变时，更新 stay22Url
+                updateStay22Url()
             }
         })
 
